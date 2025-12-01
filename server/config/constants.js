@@ -1,7 +1,8 @@
-// Validate critical environment variables in production
 const isProduction = process.env.NODE_ENV === 'production';
 
-if (isProduction) {
+function validateProductionSettings() {
+    if (!isProduction) return;
+
     if (!process.env.JWT_SECRET || process.env.JWT_SECRET === 'your-secret-key-change-in-production') {
         throw new Error('JWT_SECRET must be set in production environment');
     }
@@ -20,6 +21,7 @@ module.exports = {
     // WARNING: Change these in production via environment variables!
     JWT_SECRET: process.env.JWT_SECRET || 'dev-secret-key-change-in-production',
     ADMIN_PASSWORD: process.env.ADMIN_PASSWORD || 'admin123',
-    NODE_ENV: process.env.NODE_ENV || 'development'
+    NODE_ENV: process.env.NODE_ENV || 'development',
+    validateProductionSettings
 };
 

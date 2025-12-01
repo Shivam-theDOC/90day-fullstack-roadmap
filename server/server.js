@@ -4,7 +4,13 @@ const cors = require('cors');
 const connectDB = require('./config/database');
 const routes = require('./routes');
 const errorHandler = require('./middleware/errorHandler');
-const { PORT } = require('./config/constants');
+const constants = require('./config/constants');
+
+// Validate production environment variables at server start (not at module load)
+if (typeof constants.validateProductionSettings === 'function') {
+    constants.validateProductionSettings();
+}
+const { PORT } = constants;
 
 const app = express();
 
