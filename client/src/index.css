@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+<<<<<<< HEAD
 html, body, #root {
   height: 100%;
 }
@@ -48,12 +49,128 @@ body {
   width: 90%;
   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
   animation: slideUp 0.3s ease-out;
+=======
+/* Import modern fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap');
+
+@layer base {
+  body {
+    @apply bg-gradient-to-br from-slate-900 via-gray-900 to-slate-900;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    min-height: 100vh;
+  }
+}
+
+@layer utilities {
+
+  /* Glassmorphism effect */
+  .glass {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .glass-dark {
+    background: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .glass-strong {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  }
+
+  /* Gradient text - Updated with 3-tone palette */
+  .gradient-text {
+    @apply bg-gradient-to-r from-orange-400 via-teal-400 to-cyan-400 bg-clip-text text-transparent;
+  }
+
+  .gradient-text-primary {
+    @apply bg-gradient-to-r from-teal-400 to-cyan-400 bg-clip-text text-transparent;
+  }
+
+  .gradient-text-accent {
+    @apply bg-gradient-to-r from-orange-400 to-orange-500 bg-clip-text text-transparent;
+  }
+
+  /* Smooth animations */
+  .animate-fade-in {
+    animation: fadeIn 0.5s ease-in;
+  }
+
+  .animate-slide-up {
+    animation: slideUp 0.6s ease-out;
+  }
+
+  .animate-scale {
+    animation: scale 0.3s ease-out;
+  }
+
+  /* Custom scrollbar */
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(29, 211, 176, 0.3);
+    border-radius: 10px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: rgba(29, 211, 176, 0.5);
+  }
+
+  /* Hover glow effect - Updated colors */
+  .hover-glow {
+    transition: all 0.3s ease;
+  }
+
+  .hover-glow:hover {
+    box-shadow: 0 0 20px rgba(29, 211, 176, 0.4),
+      0 0 40px rgba(29, 211, 176, 0.2);
+    transform: translateY(-2px);
+  }
+
+  /* Shimmer effect */
+  .shimmer {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .shimmer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg,
+        transparent,
+        rgba(255, 255, 255, 0.2),
+        transparent);
+    animation: shimmer 2s infinite;
+  }
+>>>>>>> 828ddaa (Added Login page)
 }
 
 @keyframes fadeIn {
   from {
     opacity: 0;
   }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 828ddaa (Added Login page)
   to {
     opacity: 1;
   }
@@ -61,6 +178,7 @@ body {
 
 @keyframes slideUp {
   from {
+<<<<<<< HEAD
     transform: translateY(20px);
     opacity: 0;
   }
@@ -69,3 +187,262 @@ body {
     opacity: 1;
   }
 }
+=======
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scale {
+  from {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes shimmer {
+  to {
+    left: 100%;
+  }
+}
+
+/* Floating animation for background elements */
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* ========================================
+   CENTRALIZED UI COMPONENT STYLES
+   ======================================== */
+
+@layer components {
+  /* === BUTTONS === */
+
+  /* Primary button with #2dd4bf teal color */
+  .btn-primary {
+    @apply w-full glass-strong backdrop-blur-xl text-white font-bold py-3.5 rounded-xl;
+    @apply hover:shadow-2xl focus:ring-4 focus:ring-teal-500/50;
+    @apply transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed;
+    @apply transform hover:scale-[1.02] border border-white/20;
+    background-color: #2dd4bf;
+    box-shadow: 0 20px 50px rgba(45, 212, 191, 0.4);
+  }
+
+  /* Tab button (inactive state) */
+  .btn-tab {
+    @apply flex-1 py-3 px-4 rounded-xl font-semibold transition-all duration-300;
+    @apply text-gray-700 hover:bg-white/20 backdrop-blur-sm;
+  }
+
+  /* Tab button (active state) */
+  .btn-tab-active {
+    @apply flex-1 py-3 px-4 rounded-xl font-semibold transition-all duration-300;
+    @apply glass-strong text-white shadow-lg backdrop-blur-xl border border-white/20;
+    background-color: #2dd4bf;
+  }
+
+  /* === INPUTS === */
+
+  /* Glassmorphic input field */
+  .input-glass {
+    @apply w-full px-4 py-3 glass border border-white/20 rounded-xl;
+    @apply focus:ring-2 focus:ring-teal-500 focus:border-transparent;
+    @apply outline-none transition-all duration-300 text-gray-900;
+    @apply backdrop-blur-xl bg-white/50 placeholder-gray-500;
+  }
+
+  /* Input label */
+  .input-label {
+    @apply block text-sm font-semibold text-gray-700 mb-2;
+  }
+
+  /* === CARDS === */
+
+  /* Main glassmorphic auth card */
+  .card-glass-auth {
+    @apply glass-strong backdrop-blur-2xl bg-white/40 rounded-3xl shadow-2xl p-8 border border-white/20;
+  }
+
+  /* Tab container */
+  .tab-container {
+    @apply flex gap-2 mb-8 p-1.5 glass rounded-2xl shadow-lg backdrop-blur-xl bg-white/30;
+  }
+
+  /* === ALERTS === */
+
+  /* Error alert */
+  .alert-error {
+    @apply mb-6 p-4 glass-strong bg-orange-100/50 border-l-4 border-orange-500;
+    @apply rounded-r backdrop-blur-xl animate-scale;
+  }
+
+  /* === BACKGROUNDS === */
+
+  /* Animated gradient background container */
+  .bg-gradient-pastel {
+    @apply bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 relative overflow-hidden;
+  }
+
+  /* Dark gradient background */
+  .bg-gradient-dark {
+    @apply bg-gradient-to-br from-slate-900 via-gray-900 to-slate-900 relative overflow-hidden;
+  }
+
+  /* Animated orb (reusable) */
+  .orb {
+    @apply absolute rounded-full mix-blend-multiply filter blur-3xl animate-float;
+  }
+
+  /* Specific orb variations */
+  .orb-blue {
+    @apply w-96 h-96 bg-gradient-to-br from-blue-400 to-cyan-400 opacity-30;
+    top: 5rem;
+    right: 5rem;
+  }
+
+  .orb-purple {
+    @apply w-96 h-96 bg-gradient-to-br from-purple-400 to-pink-400 opacity-30;
+    bottom: 5rem;
+    left: 5rem;
+    animation-delay: 2s;
+  }
+
+  .orb-violet {
+    @apply w-96 h-96 bg-gradient-to-br from-violet-400 to-fuchsia-400 opacity-20;
+    top: 50%;
+    left: 50%;
+    animation-delay: 4s;
+  }
+
+  /* Dark theme orbs */
+  .orb-teal {
+    @apply w-72 h-72 bg-teal-500 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-float;
+    top: 5rem;
+    left: 5rem;
+  }
+
+  .orb-orange {
+    @apply w-72 h-72 bg-orange-500 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-float;
+    bottom: 5rem;
+    right: 5rem;
+    animation-delay: 2s;
+  }
+
+  .orb-cyan {
+    @apply w-96 h-96 bg-cyan-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-float;
+    top: 50%;
+    left: 50%;
+    animation-delay: 4s;
+  }
+
+  /* === TYPOGRAPHY === */
+
+  /* Page title */
+  .title-gradient {
+    @apply text-4xl font-bold mb-2 font-['Outfit'];
+    @apply bg-gradient-to-r from-teal-600 to-cyan-600 bg-clip-text text-transparent;
+  }
+
+  /* Subtitle */
+  .subtitle-text {
+    @apply text-gray-700 text-sm font-medium;
+  }
+
+  /* Link styles */
+  .link-teal {
+    @apply text-teal-600 hover:text-teal-700 font-semibold transition-colors;
+  }
+
+  /* === LAYOUT === */
+
+  /* Full height container */
+  .container-full {
+    @apply min-h-screen flex;
+  }
+
+  /* Form container with max width */
+  .form-container {
+    @apply w-full max-w-md animate-slide-up relative z-10;
+  }
+
+  /* Sliding form wrapper */
+  .form-slider {
+    @apply relative overflow-hidden;
+  }
+
+  /* Form slide animation */
+  .form-slide-wrapper {
+    @apply flex transition-transform duration-500 ease-in-out;
+  }
+
+  /* Individual form panel */
+  .form-panel {
+    @apply w-full flex-shrink-0;
+  }
+
+  /* Form panel spacing (for register form) */
+  .form-panel-offset {
+    @apply w-full flex-shrink-0 pl-8;
+  }
+
+  /* === PASSWORD STRENGTH === */
+
+  /* Password strength container */
+  .password-strength {
+    @apply mt-2;
+  }
+
+  /* Password strength bar background */
+  .password-strength-bg {
+    @apply h-2 bg-white/40 backdrop-blur-sm rounded-full overflow-hidden;
+  }
+
+  /* Password strength bar fill */
+  .password-strength-fill {
+    @apply h-full transition-all duration-500 rounded-full;
+  }
+
+  /* === UTILITIES === */
+
+  /* Flex center */
+  .flex-center {
+    @apply flex items-center justify-center;
+  }
+
+  /* Absolute fill */
+  .absolute-fill {
+    @apply absolute inset-0 overflow-hidden;
+  }
+
+  /* Z-index layers */
+  .z-background {
+    @apply relative z-0;
+  }
+
+  .z-content {
+    @apply relative z-10;
+  }
+}
+>>>>>>> 828ddaa (Added Login page)

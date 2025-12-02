@@ -2,15 +2,16 @@ const Task = require('../models/Task');
 const transformTask = require('../utils/transformTask');
 
 const taskService = {
-    // Get all tasks
-    async getAllTasks() {
-        const tasks = await Task.find().sort({ order: 1, createdAt: 1 });
+    // Get all tasks for a specific user
+    async getAllTasks(userId) {
+        const tasks = await Task.find({ userId }).sort({ order: 1, createdAt: 1 });
         return tasks.map(transformTask);
     },
 
-    // Create a new task
-    async createTask(taskData) {
+    // Create a new task for a user
+    async createTask(userId, taskData) {
         const newTask = await Task.create({
+            userId,
             text: taskData.text,
             parentId: taskData.parentId || null,
             isExpanded: taskData.isExpanded || false,
@@ -19,20 +20,19 @@ const taskService = {
         return transformTask(newTask);
     },
 
-    // Update a task
-    async updateTask(id, updates) {
-        const task = await Task.findByIdAndUpdate(
-            id,
-            updates,
-            { new: true, runValidators: true }
-        );
+    // Update a task (with user verification)
+    async updateTask(userId, taskId, updates) {
+        const task = await Task.findOne({ _id: taskId, userId });
         if (!task) throw new Error('Task not found');
-        return transformTask(task);
+
+        Object.assign(task, updates);
+        const updatedTask = await task.save();
+        return transformTask(updatedTask);
     },
 
     // Toggle task completion
-    async toggleCompletion(id) {
-        const task = await Task.findById(id);
+    async toggleCompletion(userId, taskId) {
+        const task = await Task.findOne({ _id: taskId, userId });
         if (!task) throw new Error('Task not found');
         task.completed = !task.completed;
         const updatedTask = await task.save();
@@ -40,37 +40,36 @@ const taskService = {
     },
 
     // Toggle task expanded state
-    async toggleExpanded(id) {
-        const task = await Task.findById(id);
+    async toggleExpanded(userId, taskId) {
+        const task = await Task.findOne({ _id: taskId, userId });
         if (!task) throw new Error('Task not found');
         task.isExpanded = !task.isExpanded;
         const updatedTask = await task.save();
         return transformTask(updatedTask);
     },
 
-    // Delete task and all children
-    async deleteTaskWithChildren(id) {
-        const task = await Task.findById(id);
+    // Delete task and all children (with user verification)
+    async deleteTaskWithChildren(userId, taskId) {
+        const task = await Task.findOne({ _id: taskId, userId });
         if (!task) throw new Error('Task not found');
 
-        const deleteRecursive = async (taskId) => {
-            const children = await Task.find({ parentId: taskId });
+        const deleteRecursive = async (id) => {
+            const children = await Task.find({ parentId: id, userId });
             for (const child of children) {
                 await deleteRecursive(child._id);
             }
-            await Task.findByIdAndDelete(taskId);
+            await Task.findByIdAndDelete(id);
         };
 
         await deleteRecursive(task._id);
         return { message: 'Task and children deleted' };
     },
 
-    // Clear all completed tasks
-    async clearCompleted() {
-        await Task.deleteMany({ completed: true });
+    // Clear all completed tasks for a user
+    async clearCompleted(userId) {
+        await Task.deleteMany({ userId, completed: true });
         return { message: 'Completed tasks deleted' };
     }
 };
 
 module.exports = taskService;
-
