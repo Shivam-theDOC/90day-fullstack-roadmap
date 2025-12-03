@@ -14,6 +14,8 @@ export default function RegisterPage() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        alert('Registering...');
         setError('');
 
         if (!name || !email || !password || !confirmPassword) {
